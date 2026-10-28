@@ -1,0 +1,46 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>组合题本地适配测试</title>
+<style>.questionLi{padding:20px}.hoverDiv{padding:8px;cursor:pointer}.check_answer,.check_answer_dx{background:#b4ce85}table{border-collapse:collapse}td{border:1px solid #ccc;padding:5px}</style>
+<form onsubmit="event.preventDefault();window.submitCount++">
+<div class="questionLi" id="material-one">
+  <h3 class="mark_name">虚构材料：某练习商店的库存如下。<br><table><tr><td>商品</td><td>数量</td></tr><tr><td>铅笔</td><td>12</td></tr><tr><td>橡皮</td><td>8</td></tr></table></h3>
+  <div class="readComprehensionQues">
+    <div class="reading_answer" itemid="sub-one" qtype="0">
+      <div class="reader_answer_tit combined-tit"><span class="read_type">(单选题)</span>铅笔有多少支？</div>
+      <div class="stem_answer">
+        <div class="clearfix hoverDiv workTextWrap" onclick="addChoice(this)"><span class="num_option">A</span><div class="answer_p">8</div></div>
+        <div class="clearfix hoverDiv workTextWrap" onclick="addChoice(this)"><span class="num_option check_answer">B</span><div class="answer_p">12</div></div>
+      </div>
+    </div>
+    <div class="reading_answer" itemid="sub-two" qtype="0">
+      <div class="reader_answer_tit combined-tit"><span class="read_type">(单选题)</span>橡皮有多少块？</div>
+      <div class="stem_answer">
+        <div class="clearfix hoverDiv workTextWrap" onclick="addChoice(this)"><span class="num_option">A</span><div class="answer_p">8</div></div>
+        <div class="clearfix hoverDiv workTextWrap" onclick="addChoice(this)"><span class="num_option">B</span><div class="answer_p">12</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="questionLi" id="material-two">
+  <h3 class="mark_name">另一份虚构材料：盒中只有红球和蓝球。</h3>
+  <div class="readComprehensionQues">
+    <div class="reading_answer" itemid="sub-one" qtype="1">
+      <div class="reader_answer_tit combined-tit"><span class="read_type">(多选题)</span>选出材料中的颜色。</div>
+      <div class="stem_answer">
+        <div class="clearfix hoverDiv workTextWrap" onclick="addMultipleChoice(this)"><span class="num_option_dx">A</span><div class="answer_p">红色</div></div>
+        <div class="clearfix hoverDiv workTextWrap" onclick="addMultipleChoice(this)"><span class="num_option_dx">B</span><div class="answer_p">蓝色</div></div>
+        <div class="clearfix hoverDiv workTextWrap" onclick="addMultipleChoice(this)"><span class="num_option_dx check_answer_dx">C</span><div class="answer_p">绿色</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+<button type="submit">人工提交测试</button></form>
+<script>
+window.submitCount=0;window.clickCount=0;
+function addChoice(element){
+ window.clickCount++;const marker=element.querySelector('.num_option');
+ if(marker.classList.contains('check_answer')){marker.classList.remove('check_answer');element.setAttribute('aria-checked','false');return;}
+ for(const option of element.parentElement.children){option.querySelector('.num_option').classList.remove('check_answer');option.setAttribute('aria-checked','false');}
+ marker.classList.add('check_answer');element.setAttribute('aria-checked','true');
+}
+function addMultipleChoice(element){window.clickCount++;const marker=element.querySelector('.num_option_dx');marker.classList.toggle('check_answer_dx');element.setAttribute('aria-checked',String(marker.classList.contains('check_answer_dx')));}
+</script></html>

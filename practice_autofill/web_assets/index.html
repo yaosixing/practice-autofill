@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>练习工作台 · Practice Studio</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2322372e'/%3E%3Cpath d='M18 17h28v30H18zM24 26h16M24 33h16M24 40h9' fill='none' stroke='%23dae6ac' stroke-width='3'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<div class="shell">
+  <aside class="sidebar">
+    <a class="brand" href="#workspace" aria-label="练习工作台首页"><span class="brand-mark" aria-hidden="true">习<span></span></span><span>练习工作台<small>PRACTICE STUDIO</small></span></a>
+    <p class="nav-label">你的工作空间</p>
+    <nav aria-label="主要导航">
+      <button class="nav-item active" data-page="workspace" aria-current="page"><span class="nav-icon">▤</span>练习工作台<span class="nav-index">01</span></button>
+      <button class="nav-item" data-page="api"><span class="nav-icon">◇</span>API 配置<span class="nav-index">02</span></button>
+      <button class="nav-item" data-page="browser"><span class="nav-icon">▣</span>浏览器<span class="nav-index">03</span></button>
+      <button class="nav-item" data-page="settings"><span class="nav-icon">≋</span>答题与节奏<span class="nav-index">04</span></button>
+      <button class="nav-item" data-page="guide"><span class="nav-icon">?</span>使用指南<span class="nav-index">05</span></button>
+    </nav>
+    <div class="sidebar-note"><span class="small-rule"></span><p>只辅助练习。<br>提交由你完成。</p><small>不自动翻页 · 不自动提交</small></div>
+    <div class="session-note"><span class="status-dot"></span>本机运行<span class="session-detail">配置仅本次有效</span></div>
+  </aside>
+  <div class="body-wrap">
+    <header class="topbar"><span class="breadcrumb">工作空间 <span>/</span> <strong id="page-name">练习工作台</strong></span><div class="top-status"><span id="connection-dot" class="status-dot"></span><span id="connection-label">连接中</span><span class="separator"></span><span id="key-status">API 未配置</span></div></header>
+    <main id="main" tabindex="-1">
+      <section class="page active" id="page-workspace" aria-labelledby="workspace-title">
+        <div class="page-heading hero"><div><p class="eyebrow">LESS FRICTION. MORE FOCUS.</p><h1 id="workspace-title">练习，井然有序。</h1><p class="lead">从题目识别到答案回填，让每一步都清晰可见。</p></div><div class="hero-seal" aria-hidden="true"><span>LOCAL</span><div>练<span>习</span></div><small>YOUR PRACTICE, YOUR PACE</small></div></div>
+        <div class="workflow" aria-label="运行流程"><span id="step-prepare" class="step current"><b>01</b>准备页面</span><i></i><span id="step-solve" class="step"><b>02</b>获取答案</span><i></i><span id="step-fill" class="step"><b>03</b>回填核验</span><span class="flow-note">提交始终由你操作</span></div>
+        <div class="workspace-grid">
+          <div class="work-column">
+            <section class="panel task-panel"><div class="panel-title"><div><span class="section-no">01 / PREPARE</span><h2>开始一次练习</h2></div><span class="badge" id="run-badge">准备就绪</span></div>
+              <form id="task-form">
+                <label class="field"><span>本次操作</span><select id="task-action"><option value="run">自动完成当前页 · 不提交</option><option value="inspect">只读检查页面 · 不调用模型、不填写</option><option value="trial">单题验证 · 预览后确认</option><option value="demo">本地演练 · 模拟模型，无需 Key</option></select><small id="action-help">识别已加载题目，获取答案，按页面顺序清空、回填并核验。</small></label>
+                <div id="trial-field" class="field" hidden><label for="trial-question">验证题目序号</label><input id="trial-question" type="number" min="1" step="1" value="1"><small>按可识别题目的页面顺序，从 1 开始。请核对预览题干。</small></div>
+                <label class="field" id="url-field"><span>新实例的页面地址 <em>可选</em></span><div class="input-with-action"><input id="target-url" type="password" autocomplete="off" spellcheck="false" placeholder="https://…"><button type="button" id="toggle-url" class="input-action" aria-label="显示页面地址">显示</button></div><small>仅启动新实例时使用；连接已有浏览器不跳转。留空将在交互区询问。地址不写入日志。</small></label>
+                <details class="advanced"><summary>站点适配 <span>可选</span></summary><label class="field"><span>超星选择器 TOML 路径</span><input id="selectors-path" autocomplete="off" spellcheck="false" placeholder="留空使用项目已有适配配置"><small>需使用已验证的本地选择器。浏览器连接成功不代表任意网站都能识别。</small></label></details>
+                <div class="configuration-strip"><div><span>答题模式</span><button type="button" data-go="settings" id="summary-answer">快速批量 ↗</button></div><div><span>网页节奏</span><button type="button" data-go="settings" id="summary-pace">正常 ↗</button></div><div><span>浏览器</span><button type="button" data-go="browser" id="summary-browser">自动选择 ↗</button></div></div>
+                <p class="disclosure" id="external-note">真实模型会接收题干、选项与空位数量。默认允许外传，可在“答题与节奏”恢复每次确认。</p>
+                <div class="task-actions"><button class="button primary" type="submit" id="start-task">开始处理 <span aria-hidden="true">↗</span></button><button class="button secondary" type="button" id="stop-task" disabled>停止任务</button></div>
+              </form>
+            </section>
+            <section class="panel interaction-panel" id="interaction-panel" aria-labelledby="interaction-title"><div class="panel-title compact"><h2 id="interaction-title">交互区</h2><span class="tiny-label" id="prompt-state">等待任务开始</span></div><div id="interaction-empty" class="empty-inline"><span class="empty-icon" aria-hidden="true">↳</span><p>需要你操作时，会在这里提示。<small>手动登录、选择标签页、确认答案与重新扫描。</small></p></div><form id="prompt-form" hidden><p id="prompt-text"></p><label class="sr-only" for="prompt-value">回复脚本提示</label><input id="prompt-value" autocomplete="off" placeholder="按上方提示输入"><div class="prompt-actions"><button type="submit" class="button primary small">发送回复</button><button type="button" class="button secondary small" id="prompt-enter">回车继续</button><button type="button" class="text-button" id="prompt-skip">跳过 / n</button><button type="button" class="text-button" id="prompt-rescan">重新扫描 / r</button></div><small class="field-help">按照提示输入；“回车继续”发送空回复。没有提示时不会自动确认。</small></form></section>
+          </div>
+          <aside class="activity-column"><section class="panel progress-panel"><div class="panel-title compact"><h2>本次进度</h2><span class="live-tag" id="job-status">尚未开始</span></div><div class="progress-numbers"><div><b id="count-total">—</b><span>识别题目</span></div><div><b id="count-verified">—</b><span>已核验</span></div><div><b id="count-manual">—</b><span>需关注</span></div></div><div class="progress-track"><span id="progress-bar"></span></div><p class="progress-note" id="progress-note">开始后显示实际处理结果。</p></section>
+          <section class="panel activity-panel"><div class="panel-title compact"><h2>运行记录</h2><span class="tiny-label">LIVE LOG</span></div><div id="activity-log" role="log" aria-label="脚本运行记录" aria-live="off"><div class="log-empty"><span class="log-glyph" aria-hidden="true">≡</span><p>工作台已准备好</p><small>运行后，题目预览与处理结果<br>会依次出现在这里。</small></div></div><div class="log-footer"><span class="status-dot muted"></span>仅显示本次会话 · 不保存页面地址</div></section>
+          <div class="margin-note"><span>温馨提示</span><p>可以先用“本地演练”熟悉流程。它只处理测试页，不消耗 API 额度。</p><button type="button" id="choose-demo">试一次本地演练 <span>↗</span></button></div></aside>
+        </div>
+      </section>
+      <section class="page" id="page-api" aria-labelledby="api-title" hidden>
+        <div class="page-heading"><p class="eyebrow">CONNECTION / MODEL</p><h1 id="api-title">连接你的模型。</h1><p class="lead">配置实际使用的 OpenAI 兼容 API。保存到当前进程，关闭后失效。</p></div>
+        <form id="api-form" class="panel settings-panel" data-config-section="llm"><div class="panel-title"><h2>API 配置</h2><span class="badge" id="api-badge">尚未设置 Key</span></div>
+          <div class="field-grid"><label class="field full"><span>API 地址 · base_url</span><input name="base_url" type="url" required placeholder="https://api.deepseek.com"><small>远程地址必须使用 HTTPS；本地服务允许 HTTP。不要填写 Key、查询参数或会话信息。</small></label>
+          <label class="field"><span>模型名称</span><input name="model" required><small>填写接口提供方支持的模型名，例如 deepseek-flash。</small></label><label class="field"><span>请求超时 <em>秒</em></span><input name="timeout_seconds" type="number" min="0.1" step="any" required><small>超过此时间视为请求失败，再按重试配置恢复。</small></label>
+          <label class="field"><span>失败重试次数</span><input name="max_retries" type="number" min="0" max="5" step="1" required><small>0–5。首次请求之外的重试次数；权限错误直接停止。</small></label><label class="field"><span>请求最小间隔 <em>秒</em></span><input name="min_interval_seconds" type="number" min="0.01" step="any" required><small>控制 API 频率，与网页的点击、填空节奏相互独立。</small></label>
+          <label class="field"><span>最大输出 tokens</span><input name="max_tokens" type="number" min="64" step="1" required><small>至少 64。批量答案截断时可提高，实际限制由模型决定。</small></label><label class="field"><span>API Key <em id="key-field-label">隐藏输入</em></span><input id="api-key" type="password" autocomplete="new-password" spellcheck="false" placeholder="留空保留已设置的 Key"><small>不会回显或写入文件。保存只更新本工具进程，不修改父终端环境。</small></label></div>
+          <div class="form-footer"><span>保存不会调用 API 或产生测试费用。</span><button type="submit" class="button primary">应用 API 配置 ↗</button></div></form>
+        <section class="clear-panel"><div><h2>清除本次 API 设置</h2><p>API 参数恢复到启动值，移除工具进程的 Key。保留登录资料、缓存、其他配置和所有文件。</p></div><button id="clear-settings" type="button" class="button danger">清除设置</button></section>
+      </section>
+      <section class="page" id="page-browser" aria-labelledby="browser-title" hidden>
+        <div class="page-heading"><p class="eyebrow">BROWSER / LOCAL ONLY</p><h1 id="browser-title">选择工作的窗口。</h1><p class="lead">支持 Chrome、Edge、Chromium。连接已有实例和启动新实例，是两种不同方式。</p></div>
+        <form id="browser-form" class="panel settings-panel" data-config-section="browser"><div class="panel-title"><h2>浏览器连接</h2><button id="detect-browsers" type="button" class="button secondary small">检测本机浏览器 ↗</button></div>
+          <div class="field-grid"><label class="field"><span>连接方式</span><select name="mode"><option value="auto">自动 · 优先本机 9527</option><option value="attach">连接已有实例 · CDP</option><option value="launch">启动新实例 · 独立资料目录</option></select><small>自动：先探测 9527，不可用再启动检测到的浏览器。连接不会关闭用户浏览器。</small></label><label class="field"><span>浏览器类型</span><select name="kind"><option value="auto">自动选择</option><option value="chrome">Google Chrome</option><option value="edge">Microsoft Edge</option><option value="chromium">Chromium</option></select><small>显式选择后，找不到会提示失败，不会静默换浏览器。此实现不支持 Firefox / WebKit。</small></label>
+          <label class="field full"><span>可执行文件路径 <em>可选</em></span><input name="executable_path" autocomplete="off" placeholder="例如 …/Microsoft/Edge/Application/msedge.exe"><small>用于启动新实例，不能与 CDP 地址同时设置；连接模式请留空。</small></label><label class="field"><span>本机 CDP 地址 <em>可选</em></span><input name="cdp_url" placeholder="http://127.0.0.1:9527"><small>留空使用 9527；仅本机 HTTP。普通打开的 Edge 未开放调试端口时，无法直接连接。</small></label><label class="field"><span>连接超时 <em>秒</em></span><input name="connect_timeout_seconds" type="number" min="0.1" step="any" required><small>本机调试端点的最大连接等待时间。不会结束占用端口的程序。</small></label></div>
+          <div class="form-footer"><span>新实例使用专用资料目录，登录仍由你手动完成。</span><button type="submit" class="button primary">应用浏览器设置 ↗</button></div></form>
+        <section class="panel detection-panel"><div class="panel-title compact"><h2>检测结果</h2><span class="tiny-label">DISCOVERY</span></div><div id="detection-result" class="muted-copy">点击“检测本机浏览器”，检查安装路径与 CDP 可用性。文件存在不代表启动已验证。</div></section>
+      </section>
+      <section class="page" id="page-settings" aria-labelledby="settings-title" hidden>
+        <div class="page-heading"><p class="eyebrow">WORKFLOW / YOUR PACE</p><h1 id="settings-title">按你的节奏来。</h1><p class="lead">模型请求方式决定如何获取答案；网页节奏决定如何操作控件，两者独立配置。</p></div>
+        <form id="settings-form" class="settings-stack"><section class="panel settings-panel"><div class="panel-title"><h2>答题模式</h2><span class="section-no">01 / ANSWERING</span></div><div class="field-grid"><label class="field"><span>模型请求模式</span><select name="answering.mode"><option value="fast">快速批量 · 优先整页一次请求</option><option value="single">逐题请求 · 每题单独获取答案</option></select><small>快速模式先复用缓存，再批量请求；始终按页面题序回填，单题验证仍使用单题协议。</small></label><label class="field"><span>每批题数上限</span><input name="answering.batch_size" type="number" min="0" step="1" required><small>0 表示优先整页；正整数限制每批数量，仍受字符预算限制。</small></label><label class="field"><span>每批请求字符预算</span><input name="answering.max_batch_chars" type="number" min="256" step="1" required><small>序列化请求的保守字符上限，不等同模型 token 上限。单题过长交由既有恢复机制。</small></label><label class="check-field"><input name="answering.fallback_to_single" type="checkbox"><span>允许回退逐题请求<small>批量持续异常时，拆小失败部分，必要时回退；有效答案不重复请求。</small></span></label></div></section>
+          <section class="panel settings-panel"><div class="panel-title"><h2>网页选填节奏</h2><span class="section-no">02 / PACING</span></div><div class="pace-options" role="group" aria-label="网页选填节奏"><label class="pace-option"><input type="radio" name="pacing.mode" value="slow"><span><b>慢</b><small>题间 1.5s<br>控件间 0.35s</small></span></label><label class="pace-option"><input type="radio" name="pacing.mode" value="normal"><span><b>正常</b><small>保持原速<br>不额外等待</small></span></label><label class="pace-option"><input type="radio" name="pacing.mode" value="fast"><span><b>快</b><small>减少重复读取<br>保留回读验证</small></span></label><label class="pace-option"><input type="radio" name="pacing.mode" value="custom"><span><b>自定义</b><small>自行设定<br>两个等待间隔</small></span></label></div>
+          <div class="field-grid custom-delays"><label class="field"><span>自定义题间等待 <em>秒</em></span><input name="pacing.question_delay_seconds" type="number" min="0" max="30" step="any" required><small>0–30，仅自定义模式生效。首道实际处理题目前不额外等待。</small></label><label class="field"><span>自定义控件间隔 <em>秒</em></span><input name="pacing.control_delay_seconds" type="number" min="0" max="30" step="any" required><small>0–30，覆盖清空检查与填写步骤。每题第一个控件步骤不额外等待。</small></label></div><p class="section-footnote">快模式通过减少冗余读取提速，实际效果取决于页面；任何模式都保留状态验证。</p></section>
+          <section class="panel settings-panel"><div class="panel-title"><h2>回填与确认</h2><span class="section-no">03 / CONTROL</span></div><div class="check-stack"><label class="check-field"><input type="checkbox" name="run.auto_fill"><span>自动回填，不逐题询问<small>关闭后，每道可靠答案先在交互区等待确认；仍不会自动提交。</small></span></label><label class="check-field"><input type="checkbox" name="run.clear_before_fill"><span>先清空已有答案，再重新填写<small>移除已选项、清空填空，然后按答案填写并核验；失败时停止该题。</small></span></label><label class="check-field"><input type="checkbox" name="run.confirm_external_data"><span>每次运行询问数据外传许可<small>默认关闭。真实请求只发送题干、选项与空位数；缓存可在本地保存题目和答案。</small></span></label></div><div class="field-grid advanced-timing"><label class="field"><span>页面加载等待上限 <em>秒</em></span><input type="number" name="run.load_timeout_seconds" min="0.1" step="any" required><small>页面与题目无法在此时间内就绪时，提示人工处理。</small></label><label class="field"><span>结构稳定观察时间 <em>秒</em></span><input type="number" name="run.stable_seconds" min="0.1" step="any" required><small>扫描期间等待题目结构稳定。不会因快模式取消这项检查。</small></label></div></section>
+          <details class="panel settings-panel selector-settings"><summary>高级：通用页面识别规则</summary><p class="section-footnote">仅对通用适配器生效；超星使用工作台中指定的独立 TOML。请根据脱敏 DOM 验证选择器，不要从全页猜测题目边界。</p><div class="field-grid"><label class="field full"><span>题目容器 · container</span><input name="selectors.container" required spellcheck="false"><small>每次匹配一个完整题目容器，例如 fieldset。混入多题会导致归属不明确并跳过。</small></label><label class="field full"><span>题干 · stem</span><input name="selectors.stem" required spellcheck="false"><small>在每个题目容器内必须唯一匹配题干，例如 legend 或 [data-stem]。</small></label><label class="field full"><span>作答控件 · control</span><input name="selectors.control" required spellcheck="false"><small>限定题内可支持的输入控件；不会依据模型输出创建定位器或点击任意按钮。</small></label><label class="field full"><span>访问阻挡 · blockers</span><input name="selectors.blockers" required spellcheck="false"><small>匹配登录输入、验证码或站点限制时暂停，交由你手动处理；不会尝试绕过。</small></label></div></details>
+          <div class="form-footer sticky-save"><span>设置仅在本次控制台中生效，不改写 TOML。</span><button type="submit" class="button primary">应用答题与节奏 ↗</button></div>
+        </form>
+      </section>
+      <section class="page" id="page-guide" aria-labelledby="guide-title" hidden>
+        <div class="page-heading"><p class="eyebrow">A LITTLE GUIDANCE</p><h1 id="guide-title">开始前，看这里。</h1><p class="lead">只用于你有权访问、允许自动化及 AI 辅助的练习或自测页面。</p></div>
+        <div class="guide-grid"><section class="panel guide-card"><span class="guide-number">01</span><h2>先选择浏览器</h2><p>已有带调试端口的 Chrome / Edge：选择连接模式，填写本机 CDP 地址。普通窗口无法直接附加。</p><p>没有调试窗口：选择启动新实例，输入页面地址，手动登录。工具使用独立资料目录复用登录。</p><button type="button" class="text-button" data-go="browser">去设置浏览器 ↗</button></section><section class="panel guide-card"><span class="guide-number">02</span><h2>配置模型，再开始</h2><p>API Key 从环境变量读取，也能在页面隐藏输入。Key 不会回显，不会写入文件；关闭控制台后本次修改失效。</p><p>先运行本地演练，可以不配置 Key、不产生真实模型请求，熟悉提取与回填流程。</p><button type="button" class="text-button" data-go="api">去填写 API ↗</button></section><section class="panel guide-card"><span class="guide-number">03</span><h2>在交互区回应提示</h2><p>完成手动登录后，按提示发送空回复继续。有多个标签页时，输入题目页对应编号。</p><p>开启逐题确认时，输入 y 回填、其余跳过。处理后可人工翻页，再输入 r 扫描；工具不会自动翻页。</p></section><section class="panel guide-card"><span class="guide-number">04</span><h2>停止与恢复</h2><p>停止会在安全检查点结束；正在等待的模型请求可能要等到返回或超时。已写入的内容不会自动撤销。</p><p>重新开始会复用已校验缓存，并核对网页状态。缓存、日志和专用登录资料保存在项目 runtime/。</p></section></div>
+        <section class="panel guide-limit"><h2>能力边界</h2><p>支持结构明确的单选、多选和文本填空，包括可识别的 contenteditable 与可访问 iframe。图片题、未知归属控件和复杂编辑器转人工；通用规则不保证适配任意网站。</p><p>超星使用独立适配器和本地选择器配置。遇到登录、验证码或访问限制，请在浏览器手动处理，工具不会尝试绕过。</p><p>原命令行入口保留：<code>Start.cmd --menu</code>。网页与终端分别启动时，临时配置和任务各自独立；不要同时操作同一答题页面。</p></section>
+      </section>
+      <footer class="page-footer"><span>练习工作台 <i>／</i> Practice Studio</span><span>本机工具 · 自主练习 · 最终提交由你完成</span></footer>
+    </main>
+  </div>
+</div>
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+<dialog id="clear-dialog"><form method="dialog"><span class="eyebrow">RESET / SESSION ONLY</span><h2>清除本次 API 设置？</h2><p>将 API 参数恢复到启动值，并移除当前工具进程中的 Key。</p><p class="muted-copy">不会修改配置文件、父终端环境、浏览器登录、答案缓存、其他设置或脚本。</p><label class="field"><span>输入 CLEAR 确认</span><input id="clear-confirmation" autocomplete="off" placeholder="默认取消"></label><div class="dialog-actions"><button class="button secondary" value="cancel" autofocus>取消</button><button class="button danger" type="button" id="confirm-clear">确认清除</button></div></form></dialog>
+</body>
+</html>

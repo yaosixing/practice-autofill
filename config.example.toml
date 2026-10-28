@@ -1,0 +1,47 @@
+[llm]
+# Key is read only from DEEPSEEK_API_KEY.
+base_url = "https://api.deepseek.com"
+model = "deepseek-flash"
+timeout_seconds = 60
+max_retries = 2
+min_interval_seconds = 2
+max_tokens = 2048
+
+[run]
+auto_fill = false
+# Default permission granted by the user; true restores a per-run consent prompt.
+confirm_external_data = false
+# Clear and verify empty controls before writing validated answers, including cache hits.
+clear_before_fill = true
+load_timeout_seconds = 20
+stable_seconds = 1.5
+runtime_dir = "runtime"
+# Optional: use an explicitly chosen locally installed browser.
+executable_path = ""
+channel = ""
+
+[selectors]
+container = "fieldset, [data-question]"
+stem = "legend, [data-stem]"
+control = 'input[type=radio], input[type=checkbox], [role=radio], [role=checkbox], input:not([type]), input[type=text], textarea, [contenteditable=true], iframe[data-blank]'
+blockers = 'input[type=password], .g-recaptcha, iframe[src*="recaptcha"], iframe[src*="hcaptcha"], [data-automation-blocked]'
+
+[answering]
+mode = "fast"
+batch_size = 0
+max_batch_chars = 24000
+fallback_to_single = true
+
+[browser]
+mode = "auto"
+kind = "auto"
+executable_path = ""
+cdp_url = ""
+connect_timeout_seconds = 10
+
+[pacing]
+# 网页选填节奏：slow / normal / fast / custom；默认 normal 保持原有速度。
+mode = "normal"
+# 仅 custom 生效；0–30 秒，可小数。与 llm.min_interval_seconds 无关。
+question_delay_seconds = 0.5
+control_delay_seconds = 0.1

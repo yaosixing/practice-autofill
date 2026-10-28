@@ -1,0 +1,10 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8">
+<style>fieldset{padding:15px}iframe{width:90%;height:150px}</style>
+<div id="content"></div>
+<script>
+if(location.search==='?nested'){
+document.querySelector('#content').innerHTML='<fieldset id="nested"><legend>嵌套框架题：填写 8。</legend><input aria-label="答案"></fieldset>';
+}else{
+document.querySelector('#content').innerHTML='<fieldset id="frame"><legend>框架题：1 加 2 等于多少？</legend><label><input type="radio" name="frame" value="a">2</label><label><input type="radio" name="frame" value="b">3</label></fieldset><iframe src="frame.html?nested" title="嵌套题目"></iframe>';
+}
+</script></html>

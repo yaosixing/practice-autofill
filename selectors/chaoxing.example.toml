@@ -1,0 +1,18 @@
+# Template for other layouts; placeholders are NOT verified selectors.
+# For the observed choice layout, see chaoxing.work.toml. Live filling remains unverified.
+# Inspect authorized, sanitized DOM locally before enabling.
+verified_locally = false
+[selectors]
+container = "TODO_QUESTION_CONTAINER"
+stem = "TODO_STEM_WITH_CONTEXT"
+control = "TODO_ORDERED_ANSWER_CONTROLS"
+blockers = "TODO_LOGIN_CAPTCHA_ACCESS_OR_PROCTORING_BLOCKERS"
+
+[choices]
+single_marker = "TODO_SINGLE_MARKER"
+multiple_marker = "TODO_MULTIPLE_MARKER"
+option_text = "TODO_OPTION_TEXT"
+single_selected_class = "TODO_SINGLE_SELECTED_CLASS"
+multiple_selected_class = "TODO_MULTIPLE_SELECTED_CLASS"
+single_handler = "TODO_SINGLE_HANDLER"
+multiple_handler = "TODO_MULTIPLE_HANDLER"

@@ -1,0 +1,47 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>超星结构本地回归样例</title>
+<link rel="icon" href="data:,">
+<style>body{font:18px system-ui;margin:30px}.questionLi{padding:20px;border:1px solid #aaa;margin:15px}
+.answerBg{padding:8px;cursor:pointer}.num_option,.num_option_dx{display:inline-block;margin-right:15px}
+.answer_p{display:inline-block}.check_answer,.check_answer_dx{background:#bdf}</style>
+<h1>虚构练习题：仅模拟已观察到的控件结构</h1>
+<form onsubmit="event.preventDefault();window.submitCount++">
+<div id="fixture-single" class="questionLi padBom50 fontLabel singleQuesId" role="option">
+<h3 class="mark_name" aria-hidden="true">本地单选：2 + 2 等于多少？</h3>
+<div class="stem_answer qtDetail">
+<div class="answerBg clearfix workTextWrap" role="radio" onclick="addChoice(this,'fixture-single','A')">
+<span aria-hidden="true" class="num_option fl check_answer">A</span><div class="answer_p" aria-hidden="true">3</div></div>
+<div class="answerBg clearfix workTextWrap" role="radio" onclick="addChoice(this,'fixture-single','B')">
+<span aria-hidden="true" class="num_option fl">B</span><div class="answer_p" aria-hidden="true">4</div></div>
+<div class="answerBg clearfix workTextWrap" role="radio" onclick="addChoice(this,'fixture-single','C')">
+<span aria-hidden="true" class="num_option fl">C</span><div class="answer_p" aria-hidden="true">5</div></div>
+</div></div>
+<div id="fixture-multiple" class="questionLi" role="option">
+<h3 class="mark_name" aria-hidden="true">本地多选：请选择小于 5 的质数。</h3>
+<div class="stem_answer qtDetail">
+<div class="answerBg clearfix workTextWrap" role="checkbox" onclick="addMultipleChoice(this,'fixture-multiple','A')">
+<span aria-hidden="true" class="num_option_dx fl">A</span><div class="answer_p" aria-hidden="true">2</div></div>
+<div class="answerBg clearfix workTextWrap" role="checkbox" onclick="addMultipleChoice(this,'fixture-multiple','B')">
+<span aria-hidden="true" class="num_option_dx fl">B</span><div class="answer_p" aria-hidden="true">3</div></div>
+<div class="answerBg clearfix workTextWrap" role="checkbox" onclick="addMultipleChoice(this,'fixture-multiple','C')">
+<span aria-hidden="true" class="num_option_dx fl check_answer_dx">C</span><div class="answer_p" aria-hidden="true">4</div></div>
+</div></div>
+<div id="fixture-blank" class="questionLi"><h3 class="mark_name" aria-hidden="true">暂不适配：填写一项。</h3><input type="text"></div>
+<button id="submit" type="submit">仅供人工提交</button>
+</form>
+<script>
+window.submitCount=0;window.clickCount=0;
+function addChoice(obj,qid,option){
+    window.clickCount++;
+    const marker=obj.querySelector('.num_option');
+    if(marker.classList.contains('check_answer')){
+        marker.classList.remove('check_answer');
+    }else{
+        obj.closest('.questionLi').querySelectorAll('.num_option').forEach(e=>e.classList.remove('check_answer'));
+        marker.classList.add('check_answer');
+    }
+}
+function addMultipleChoice(obj,qid,option){
+    window.clickCount++;
+    obj.querySelector('.num_option_dx').classList.toggle('check_answer_dx');
+}
+</script></html>

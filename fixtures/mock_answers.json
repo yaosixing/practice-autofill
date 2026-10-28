@@ -1,0 +1,58 @@
+{
+  "b19526227af6de50515de2d2ad3311ce677ab52e42c96f92997d2929c1695a58": {
+    "type": "single",
+    "answers": [
+      "B"
+    ]
+  },
+  "d612de058d3f1ed7d6c1fe4b34895294355cba166a17cfe7416e9e2a252c5936": {
+    "type": "multiple",
+    "answers": [
+      "A",
+      "B"
+    ]
+  },
+  "7285e483dbf1cbc13eeff0391081852664d75810d3e7775ba5393f62d8a3a59a": {
+    "type": "blank",
+    "answers": [
+      "2",
+      "北京"
+    ]
+  },
+  "e749868c73b8111f2b31bcdd69daa2614fda3907bef4628660de7652ac00808d": {
+    "type": "blank",
+    "answers": [
+      "hello"
+    ]
+  },
+  "fad4b686f3d860d6bcbf1e5f9fe2d7b181fa497414571b03c94ee20538202664": {
+    "type": "blank",
+    "answers": [
+      "world"
+    ]
+  },
+  "47e26807502def8b6788568f96dffa8cc06f4a02368115ccfe960a7cf6896ab9": {
+    "type": "blank",
+    "answers": [
+      "test"
+    ]
+  },
+  "9f1b29fe5c56ce55d33419cd8d6dd9a66c2b9767a1bbeb849852570a99de3096": {
+    "type": "single",
+    "answers": [
+      "A"
+    ]
+  },
+  "280f866e994405123f47fb8812f459644b54298b7e8f90d2cf05aadb92446685": {
+    "type": "single",
+    "answers": [
+      "B"
+    ]
+  },
+  "c7780484d4ecd2aec1173b72068282d424703c488566ccf98e8bfe15f5ca23bc": {
+    "type": "blank",
+    "answers": [
+      "8"
+    ]
+  }
+}

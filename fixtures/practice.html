@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-CN"><meta charset="utf-8"><title>本地授权练习测试</title>
+<style>
+body{max-width:850px;margin:30px auto;font:18px system-ui;line-height:1.6}
+fieldset{margin:18px 0;padding:16px}label{display:block}input,textarea,[contenteditable]{font:inherit}
+[contenteditable]{border:1px solid #888;min-height:35px}
+iframe{width:95%;min-height:180px;border:1px solid #ccc}
+</style>
+<h1>本地练习测试页</h1>
+<p>不连接真实网站。提交事件计数：<strong id="count">0</strong></p>
+<form onsubmit="event.preventDefault();window.submitCount++;document.querySelector('#count').textContent=window.submitCount">
+<fieldset id="single"><legend>2 + 2 等于多少？</legend>
+<label><input type="radio" name="single" value="a">3</label>
+<label><input type="radio" name="single" value="b">4</label></fieldset>
+<fieldset id="multi"><legend>请选择小于 5 的质数。</legend>
+<label><input type="checkbox" value="a">2</label>
+<label><input type="checkbox" value="b">3</label>
+<label><input type="checkbox" id="multi-c" value="c" checked>4</label></fieldset>
+<fieldset id="blanks"><legend>依次填写：一加一的结果；中国的首都。</legend>
+<input aria-label="第一空"><input type="text" aria-label="第二空"></fieldset>
+<fieldset id="textarea"><legend>填写英文单词 hello。</legend><textarea aria-label="答案"></textarea></fieldset>
+<fieldset id="rich"><legend>填写英文单词 world。</legend><div contenteditable="true" aria-label="答案"></div></fieldset>
+<fieldset id="editor"><legend>在嵌入编辑器填写 test。</legend><iframe data-blank src="editor.html" title="答案编辑器"></iframe></fieldset>
+<fieldset id="image"><legend>这张图片是什么？</legend><img alt="人工处理示例" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
+<input aria-label="答案"></fieldset>
+<div id="dynamic"></div>
+<button type="submit" id="submit">人工提交测试按钮（脚本不会点击）</button>
+</form>
+<iframe src="frame.html" title="题目框架"></iframe>
+<script>
+window.submitCount=0;
+setTimeout(()=>{
+document.querySelector('#dynamic').innerHTML='<fieldset id="delayed"><legend>动态题：5 减 2 等于多少？</legend><label><input type="radio" name="delayed" value="a">3</label><label><input type="radio" name="delayed" value="b">4</label></fieldset>';
+},100);
+</script></html>

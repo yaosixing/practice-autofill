@@ -1,0 +1,18 @@
+# Ordinary choices inspected 2026-10-21; combined single choices inspected 2026-10-24.
+# Only these observed work/dowork structures are covered. Live filling is NOT validated.
+verified_locally = true
+
+[selectors]
+container = '.questionLi:not(:has(.reading_answer)), .questionLi .readComprehensionQues > .reading_answer'
+stem = '.mark_name, .reader_answer_tit'
+control = '.stem_answer > .answerBg[role="radio"], .stem_answer > .answerBg[role="checkbox"], .stem_answer > div.clearfix.hoverDiv.workTextWrap:not([role])'
+blockers = 'input[type=password], .g-recaptcha, iframe[src*="recaptcha"], iframe[src*="hcaptcha"], [data-automation-blocked]'
+
+[choices]
+single_marker = ".num_option"
+multiple_marker = ".num_option_dx"
+option_text = ".answer_p"
+single_selected_class = "check_answer"
+multiple_selected_class = "check_answer_dx"
+single_handler = "addChoice"
+multiple_handler = "addMultipleChoice"
