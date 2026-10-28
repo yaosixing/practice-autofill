@@ -2,12 +2,24 @@
 
 仅用于本人有权访问、明确允许自动化和 AI 辅助的练习或自测页面。主菜单正式操作默认快速求解并自动回填；单题验证保留预览确认。不点击提交、交卷或评分按钮。
 
+## 获取项目
+
+公开仓库：<https://github.com/yaosixing/practice-autofill>
+
+在 PowerShell 7 中克隆项目并进入目录：
+
+```powershell
+git clone https://github.com/yaosixing/practice-autofill.git
+Set-Location practice-autofill
+```
+
+后续命令均假设当前目录是项目根目录。也可以把仓库克隆到自己的其他目录。
+
 ## 快速启动（Windows）
 
 双击项目根目录 **Start.cmd**，选择 **1 网页控制台** 或 **2 终端菜单**（回车默认终端）。网页中可配置模型、浏览器、批量与选填节奏，回应登录/标签页/回填提示，查看进度并停止任务；各选项都有说明。终端中仍可用主菜单 **3 / a** 隐藏输入 Key，**1** 正式处理、**6** 设置答题模式、**7** 设置浏览器、**8** 设置选填节奏。配置均仅当前进程有效。
 
 ```powershell
-Set-Location E:/CodexData/scratch/2026-10-21/practice-autofill
 .\Start.cmd
 # 直接打开网页控制台
 .\Start.cmd --web
@@ -67,7 +79,6 @@ practice-autofill/
   config.example.toml
   .gitignore
   README.md
-  SOURCE.md                      # 历史快照，不再更新；以实际源码为准
   Start.cmd                      # Windows 双击入口
   bootstrap.py                   # 标准库启动检查与确认安装
   practice_autofill/
@@ -119,8 +130,6 @@ practice-autofill/
 ```
 
 ## 3. 完整源码、依赖和配置
-
-SOURCE.md 仅为历史快照，未随本次功能更新。以 practice_autofill/、tests/ 和根目录配置的实际文件为准，直接编辑运行，无需从 Markdown 复制源码。
 
 直接依赖由 pyproject.toml 声明：playwright>=1.49,<2，openai>=1.66,<3。requirements.lock.txt 固定了此次安装验证的完整第三方依赖，便于复现。当前安装方式使用 editable 本地项目，源码目录同时存放 fixtures 和 selectors；不要只复制 site-packages。
 
@@ -174,10 +183,9 @@ runtime 包含浏览器资料、storage-state.json 登录快照、题目与答�
 
 ## 5. 安装和使用
 
-以下命令使用 PowerShell 7。项目路径已经确定为 E 盘。先显式设置可配置缓存和临时目录，避免默认写入 C 盘任务产物：
+以下命令使用 PowerShell 7，并假设当前目录为项目根目录。缓存、浏览器下载和临时文件位置可按需配置；此示例将它们放在项目的 `runtime/` 子目录。该目录包含登录资料和本地题目缓存，已由 `.gitignore` 排除，不要公开分享。
 
 ```powershell
-Set-Location 'E:/CodexData/scratch/2026-10-21/practice-autofill'
 New-Item -ItemType Directory -Force -Path runtime/tmp | Out-Null
 $env:TEMP = "$PWD/runtime/tmp"
 $env:TMP = $env:TEMP
@@ -193,7 +201,7 @@ python -m venv .venv
 .venv/Scripts/python -m playwright install chromium
 ```
 
-此交付已在本项目 .venv 安装依赖和 Chromium，可直接使用后续命令。使用源码声明的新版本依赖时可跳过 requirements.lock.txt，重新运行测试再投入使用。不需要激活环境或更改 PowerShell 执行策略。
+完成上述安装后，后续命令可直接使用。也可以运行 `Start.cmd`，由启动器检查环境；需要安装依赖时会先说明并征求确认。不需要激活环境或更改 PowerShell 执行策略。
 
 真实模型模式先在当前终端设置 Key，不会写入文件或系统级环境变量：
 
@@ -225,14 +233,12 @@ Ctrl+C 会停止处理、在上下文仍可读取时保存登录快照、关闭�
 一个终端启动只监听 127.0.0.1 的本地网页服务器：
 
 ```powershell
-Set-Location 'E:/CodexData/scratch/2026-10-21/practice-autofill'
 .venv/Scripts/python -m practice_autofill --serve
 ```
 
 另一个终端启动模拟模式，不需要 Key，不调用外部模型：
 
 ```powershell
-Set-Location 'E:/CodexData/scratch/2026-10-21/practice-autofill'
 .venv/Scripts/python -m practice_autofill --mock
 ```
 
@@ -243,7 +249,6 @@ Set-Location 'E:/CodexData/scratch/2026-10-21/practice-autofill'
 运行验收：
 
 ```powershell
-Set-Location 'E:/CodexData/scratch/2026-10-21/practice-autofill'
 $env:PYTHONUTF8 = '1'
 $env:PYTHONDONTWRITEBYTECODE = '1'
 $env:TEMP = "$PWD/runtime/tmp"
@@ -298,7 +303,6 @@ $env:PLAYWRIGHT_BROWSERS_PATH = "$PWD/runtime/browsers"
 
 连接用户已经打开且已手动登录的 Chrome 9527，仅核对结构：
 ```powershell
-Set-Location 'E:/CodexData/scratch/2026-10-21/practice-autofill'
 $env:PYTHONUTF8 = '1'
 $env:PYTHONDONTWRITEBYTECODE = '1'
 .venv/Scripts/python -m practice_autofill --inspect-cdp
@@ -346,20 +350,18 @@ $env:PYTHONDONTWRITEBYTECODE = '1'
 在启动命令的本地终端设置 `DEEPSEEK_API_KEY`，不要发送到聊天或写入文件。Chrome 9527 中应恰好打开一个已核验布局的作业页面。
 
 ```powershell
-Set-Location E:/CodexData/scratch/2026-10-21/practice-autofill
 .venv/Scripts/python.exe -m practice_autofill --trial-cdp --question 1
 ```
 
 仅处理可识别题目中的第 1 题；编号不包括跳过的题目。先显示题干和选项，外传默认允许（可恢复确认）；模型返回后显示答案，输入 `y` 才回填。其他输入跳过，`q` 退出。已有缓存时无需外传，仍须确认回填。禁止与 `--auto-fill`、自动回填配置或模拟模式组合。处理完一题即退出，不翻页、不提交、不关闭用户 Chrome、不保存该 Chrome 的登录状态。
 
-该入口已进行本地控制流程测试；真实 API 调用及真实页面回填仍需本地 Key 与答案确认；外传默认允许，可配置恢复询问，本地通过不代表真实站点回填通过。`SOURCE.md` 为历史源码快照，已停止维护，以实际源文件为准。
+该入口已进行本地控制流程测试；真实 API 调用及真实页面回填仍需本地 Key 与答案确认；外传默认允许，可配置恢复询问，本地通过不代表真实站点回填通过。
 
 ## Chrome 9527 正式批量操作
 
 按当前使用要求，正式运行使用显式自动回填参数：
 
 ```powershell
-Set-Location E:/CodexData/scratch/2026-10-21/practice-autofill
 .venv/Scripts/python.exe -m practice_autofill --run-cdp --auto-fill
 ```
 
